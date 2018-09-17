@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Luck | Posts</title>
+    <title>Luck | {{ $post->title }}</title>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -137,8 +137,8 @@
         </div>
         <div class="col-md-3 offset-1" id="sidebar">
             <div class="card">
-                <a href="#" class="btn btn-primary btn-block">Edit</a>
-                <a href="#" class="btn btn-danger btn-block">Delete</a>
+                {!! Html::linkRoute('posts.edit', 'Edit', array($post->id), array('class' => 'btn btn-primary btn-block')) !!}
+                {!! Html::linkRoute('posts.destroy', 'Delete', array($post->id), array('class' => 'btn btn-danger btn-block')) !!}
                 <hr>
                 <p>This post was created by <strong>user</strong></p>
             </div>

@@ -15,7 +15,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('pages.posts');
+        $posts = Post::all();
+        return view('pages.posts')->withPosts($posts);
     }
 
     /**
