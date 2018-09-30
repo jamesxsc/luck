@@ -163,6 +163,11 @@
                     {{ Form::text('title', null, array('class' => 'form-group', 'placeholder' => 'Untitled Luck post', 'required' => '',
                             'maxlength' => '255')) }}
                     <br>
+                    {{ Form::label('slug', 'Slug:') }}
+                    <br>
+                    {{ Form::text('slug', null, array('class' => 'form-group required', 'required' => '', 'minlength' => '5', 'maxlength' => '50'
+                        , 'placeholder' => 'mycoolpost')) }}
+                    <br>
                     {{ Form::label('body', 'Body:') }}
                     <br>
                     {{ Form::textarea('body', null, array('class' => 'form-group', 'placeholder' => 'Someday will be lucky for you, it all depends on the decisions you took the days prior to that day...',

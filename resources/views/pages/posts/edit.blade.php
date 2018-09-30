@@ -157,11 +157,16 @@
                             </ul>
                         </div>
                     @endif
-                    {!! Form::open(array('route' => 'posts.update', 'data-parsley-validate' => '')) !!}
+                    {!! Form::model($post, array('route' => array('posts.update', $post->id), 'method' => 'PUT', 'data-parsley-validate' => '')) !!}
                     {{ Form::label('title', 'Title:') }}
                     <br>
                     {{ Form::text('title', $post->title, array('class' => 'form-group', 'placeholder' => $post->title, 'required' => '',
                             'maxlength' => '255')) }}
+                    <br>
+                    {{ Form::label('slug', 'Slug:') }}
+                    <br>
+                    {{ Form::text('slug', null, array('class' => 'form-group required', 'required' => '', 'minlength' => '5', 'maxlength' => '50'
+                        , 'placeholder' => 'mycoolpost')) }}
                     <br>
                     {{ Form::label('body', 'Body:') }}
                     <br>
@@ -169,6 +174,7 @@
                             'rows' => '15',
                             'required' => '')) }}
                     <br>
+                    {{ method_field('PUT') }}
                     {{ Form::submit('Confirm Edit', array('class' => 'btn btn-secondary')) }}
                     {!! Form::close() !!}
                 </div>

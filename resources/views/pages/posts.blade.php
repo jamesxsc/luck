@@ -122,6 +122,13 @@
 <div class="header">
     <span style="font-size: 32pt">Posts</span>
 </div>
+
+@if(Session::has('success'))
+    <div class="alert alert-success new-alert" role="alert">
+        <strong>Success:</strong> {{ Session::get('success') }}
+    </div>
+@endif
+
 <div class="content">
     <p>
         Take a look at some of our posts listed below to look at some cool work, or press this button to go to a
@@ -129,6 +136,9 @@
     </p>
     <button type="button" class="btn btn-secondary">Popular Post</button>
     <hr style="margin-top: 3%;">
+    <div class="text-center">
+        {{ $posts->links() }}
+    </div>
     <div class="row">
         <div class="col-md-8" id="posts-container">
             @foreach($posts as $post)
@@ -147,8 +157,8 @@
                         @endif
                     </div>
                     <div class="col-md-2 btn-container">
-                        <a href="./posts/{{ $post->id }}" class="btn btn-outline-dark">View</a>
-                        <a href="./posts/{{ $post->id }}/edit" class="btn btn-outline-danger">Edit</a>
+                        <a href="../posts/{{ $post->id }}" class="btn btn-outline-dark">View</a>
+                        <a href="../posts/{{ $post->id }}/edit" class="btn btn-outline-danger">Edit</a>
                     </div>
                 </div>
             @endforeach
@@ -156,9 +166,12 @@
         <div class="col-md-3 offset-1" id="sidebar">
             <div class="card">
                 <h2 class="sidebar-header">Sidebar</h2>
-                <a href="posts/create" class="btn btn-outline-danger">Create Post</a>
+                <a href="../posts/create" class="btn btn-outline-danger">Create Post</a>
             </div>
         </div>
+    </div>
+    <div class="text-center">
+        {{ $posts->links() }}
     </div>
 </div>
 </body>

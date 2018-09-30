@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Luck | {{ $post->title }}</title>
+    <title>Luck | Home</title>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
 
     <style>
@@ -81,32 +80,40 @@
             margin-left: 4%;
         }
 
-        #post-container {
-
+        .content p {
+            margin-bottom: 5%;
         }
 
-        #sidebar {
-
+        .time-container h4,
+        .time-container h5 {
+            text-align: right;
+            font-weight: normal;
+            margin: 1%;
         }
 
-        .new-alert {
-            margin-left: 3%;
-            margin-right: 3%;
-            margin-top: 4%;
+        .post .col-md-10 h4 {
+            margin-top: 0;
+            margin-bottom: 0;
+            font-weight: normal;
+            word-wrap: break-word;
+        }
+
+        .post .col-md-10 h2 {
             margin-bottom: 1%;
+            margin-top: 0;
+            word-wrap: break-word;
         }
 
-        .card {
-            padding: 7%;
-            text-align: center;
+        .post .col-md-10 {
+            padding-right: 8%;
         }
 
-        .card p {
-            font-size: 80%;
-        }
-
-        .card h3 {
-            margin-bottom: 7%;
+        .post {
+            border: 5px dashed #d98bff;
+            padding-left: 1.5%;
+            padding-bottom: 0;
+            padding-top: 1%;
+            margin-bottom: 4%;
         }
     </style>
 </head>
@@ -114,47 +121,51 @@
 <nav>
     <ul>
         <li><a href="..">Home</a></li>
-        <li><a id="current" href="../posts">Posts</a></li>
-        <li><a href="../about">About</a></li>
-        <li><a href="../contact">Contact</a></li>
+        <li><a id="current" href="./posts">Posts</a></li>
+        <li><a href="./about">About</a></li>
+        <li><a href="./contact">Contact</a></li>
     </ul>
 </nav>
 <div class="header">
-    <span style="font-size: 32pt">Posts</span>
+    <h2>Posts Archive</h2>
 </div>
-
-@if(Session::has('success'))
-    <div class="alert alert-success new-alert" role="alert">
-        <strong>Success:</strong> {{ Session::get('success') }}
-    </div>
-@endif
-
 <div class="content">
-    <hr style="margin-top: 3%;">
+    <p>
+        Below is a list of posts that have been archived.
+    </p>
+
+    <hr>
+
     <div class="row">
-        <div class="col-md-8" id="post-container">
-            <h4><span class="glyphicon glyphicon-time"></span> Created
-                on {{ date('j M, Y \a\t g:i A', strtotime($post->created_at)) }}
-                @if($post->created_at != $post->updated_at)
-                    (Last updated on {{ date('j M, Y \a\t g:i A', strtotime($post->updated_at)) }})
-                @endif
-            </h4>
-            <h1>{{ $post->title }}</h1>
-            <p style="word-wrap: break-word">{{ $post->body }}</p>
+        <div class="col-md-4 offset-4">
+            {{ $posts->links() }}
         </div>
-        <div class="col-md-3 offset-1" id="sidebar">
-            <div class="card">
-                <h3><strong>URL:</strong> <a href="{{ url($post->slug) }}">{{ url('p/' . $post->slug)}}</a></h3>
-                {!! Html::linkRoute('posts.edit', 'Edit', array($post->id), array('class' => 'btn btn-primary btn-block')) !!}
-                {!! Form::open(array('route' => array('posts.destroy', $post->id), 'method' => 'DELETE')) !!}
-                    {{ Form::submit('Delete', array('class' => 'btn btn-danger btn-block', 'style' => 'margin-top: 3%')) }}
-                    {{ method_field('DELETE') }}
-                {!! Form::close() !!}
-                <hr>
-                <p>This post was created by <strong>user</strong></p>
+    </div>
+
+    @foreach($posts as $post)
+        <div class="post row">
+            <div class="col-md-10">
+                <h2>{{ $post->title }}</h2>
+                <h4 style="word-wrap: break-word">{{ (substr($post->body, 0, 200) . (strlen($post->body) > 200 ? '...' : '')) }} <a href="{{ route('posts.single', $post->slug) }}" class="btn btn-secondary">Read More</a></h4>
+            </div>
+            <div class="col-md-2 time-container">
+                <h4>
+                    <span class="glyphicon glyphicon-time"></span> {{ date('j M', strtotime($post->created_at)) }}
+                </h4>
+                @if($post->created_at != $post->updated_at)
+                    <h5 style="font-style: italic">(Last updated on {{ date('j M', strtotime($post->updated_at)) }}
+                        )</h5>
+                @endif
             </div>
         </div>
+    @endforeach
+
+    <div class="row">
+        <div class="col-md-4 offset-4">
+            {{ $posts->links() }}
+        </div>
     </div>
+
 </div>
 </body>
 </html>
