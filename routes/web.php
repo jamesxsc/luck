@@ -21,12 +21,10 @@ Route::get('/', 'PagesController@getHome');
 Route::get('archive', 'PagesController@getArchive')->name('posts.archive');
 
 // Authentication Routes
+Auth::routes();
 
 // Model Routes
 Route::resource('posts', 'PostController');
 
 // Slugs
 Route::get('/p/{slug}', 'SlugController@getPostBySlug')->name('posts.single')->where('slug', '[\w\d\-\_]+');
-
-
-Auth::routes();
